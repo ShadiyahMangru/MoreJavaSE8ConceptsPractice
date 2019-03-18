@@ -1,4 +1,4 @@
-Player: Ovechkin | Position: Left Wing | Jersey: 8 | 
+Player: Ovechkin | Position: Left Wing | Jersey: 8 
 GP: 71
 Goals: 48
 Assists: 33
