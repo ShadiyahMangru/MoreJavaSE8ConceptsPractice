@@ -5,14 +5,14 @@ import java.util.stream.Stream;
 
 public class FlatMap{
 
-	Path file = new File("C:\\Users\\593476\\Desktop\\Java Programs\\TabularHockeyData\\2019WSHStats.txt").toPath();
+	Path file = new File("C:\\Users\\593476\\Desktop\\Java Programs\\TabularHockeyData\\2019WSHStatsREV.txt").toPath();
 
 	public void getMatchCount(String matchThis, String matchCategory){
 	try{
 		long matches = Files.lines(file)
 		.flatMap(line -> Stream.of(line.split("\n"))) //reads in data line-by-line
 		.filter(inputString -> inputString.contains(matchThis))
-		.peek(s -> System.out.println("Match from Input File: " + s))
+		.peek(match -> System.out.println(match))
 		.count();
 	
 		System.out.println("\n# of " + matchCategory + ": " + matches);
@@ -24,7 +24,7 @@ public class FlatMap{
 
 	public void mainMenu(){
 		System.out.println("\n\t**********************************************************");
-		System.out.println(String.format("%1s %-53s %2s", "\t*", "***** Welcome to Hockey Roster Querying Wizard! *****", "*"));
+		System.out.println(String.format("%1s %-53s %2s", "\t*", "***** Welcome to Hockey Data Filtering Wizard! *****", "*"));
 		System.out.println(String.format("%1s %-53s %2s", "\t*", "", "*"));
 		System.out.println(String.format("%1s %-53s %2s", "\t*", "     Query Current Roster to Determine Number of:", "*"));
 		System.out.println(String.format("%1s %-53s %2s", "\t*", "      1.) Centers", "*"));
@@ -41,27 +41,33 @@ public class FlatMap{
 		String userInput = "";
 		if(console != null){
 			userInput = console.readLine();
-			console.writer().println("Your selection: " + userInput);
+			//console.writer().println("Your selection: " + userInput);
 		}
 		if(userInput.equals("7")){
 			System.exit(0);
 		}
 		else if(userInput.equals("6")){
+			System.out.println("*** Filter Selection: Goalies ***");
 			getMatchCount("Goalie", "Goalies");
 		}
 		else if(userInput.equals("5")){
+			System.out.println("*** Filter Selection: Defensemen ***");
 			getMatchCount("Defense", "Defensemen");
 		}
 		else if(userInput.equals("4")){
+			System.out.println("*** Filter Selection: Wingers ***");
 			getMatchCount("Wing", "Wingers");
 		}
 		else if(userInput.equals("3")){
+			System.out.println("*** Filter Selection: Right-Wingers ***");
 			getMatchCount("Right", "Right-Wingers");
 		}
 		else if(userInput.equals("2")){
+			System.out.println("*** Filter Selection: Left-Wingers ***");
 			getMatchCount("Left", "Left-Wingers");
 		}
 		else{
+			System.out.println("*** Filter Selection: Centers ***");
 			getMatchCount("Center", "Centers");
 		}
 		mainMenu();
