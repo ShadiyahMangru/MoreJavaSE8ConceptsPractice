@@ -1,0 +1,137 @@
+Player: Ovechkin | Position: Left Wing | Jersey: 8 | 
+GP: 71
+Goals: 48
+Assists: 33
+Shots: 290
+
+Player: Holtby | Position: Goalie | Jersey: 72
+GP: 52
+Saves: 1443
+Shots Against: 1588
+Wins: 27
+
+Player: Backstrom | Position: Center | Jersey: 19
+GP: 71
+Goals: 18
+Assists: 49
+Shots: 155
+
+Player: Connolly | Position: Right Wing | Jersey: 10
+GP: 72
+Goals: 19
+Assists: 21
+Shots: 120
+
+Player: Carlson | Position: Defense | Jersey: 74
+GP: 71
+Goals: 12
+Assists: 52
+Shots: 160
+
+Player: Orlov | Position: Defense | Jersey: 9
+GP: 72
+Goals: 3
+Assists: 23
+Shots :91
+
+Player: Boyd | Position: Center | Jersey: 72
+GP: 46
+Goals: 4
+Assists: 15
+Shots: 32
+
+Player: Burakovsky | Position: Left Wing | Jersey: 65
+GP: 66
+Goals: 11
+Assists: 12
+Shots: 87
+
+Player: Dowd | Position: Center | Jersey: 26
+GP: 54
+Goals: 6
+Assists: 12
+Shots: 37
+
+Player: Eller | Position: Center | Jersey: 20
+GP: 71
+Goals: 11
+Assists: 22
+Shots: 148
+
+Player: Jaskin | Position: Right Wing | Jersey: 23
+GP: 36
+Goals: 2
+Assists: 6
+Shots: 47
+
+Player: Kuznetsov | Position: Center | Jersey: 92
+GP: 66
+Goals: 18
+Assists: 45
+Shots: 171
+
+Player: Oshie | Position: Right Wing | Jersey: 77
+GP: 61
+Goals: 21
+Assists: 24
+Shots: 130
+
+Player: Stephenson | Position: Center | Jersey: 18
+GP: 57
+Goals: 5
+Assists: 5
+Shots: 32
+
+Player: Vrana | Position: Left Wing | Jersey: 13
+GP: 72 
+Goals: 21
+Assists: 22
+Shots: 140
+
+Player: Wilson | Position: Right Wing | Jersey: 43
+GP: 53
+Goals: 20
+Assists: 16
+Shots: 111
+
+Player: Djoos | Position: Defense | Jersey: 29
+GP: 36
+Goals: 1
+Assists: 6
+Shots: 26
+
+Player: Kempny | Position: Defense | Jersey: 6
+GP: 69
+Goals: 6
+Assists: 19
+Shots: 108
+
+Player: Niskanen | Position: Defense | Jersey: 2
+GP: 70
+Goals: 8
+Assists: 15
+Shots: 122
+
+Player: Orpik | Position: Defense | Jersey: 44
+GP: 44
+Goals: 2
+Assists: 6
+Shots: 33
+
+Player: Hagelin | Position: Left Wing | Jersey: 62
+GP: 11
+Goals: 2
+Assists: 3
+Shots: 18
+
+Player: Jensen | Position: Defense | Jersey: 3
+GP: 10
+Goals: 0
+Assists:1
+Shots: 18
+
+Player: Copley | Position: Goalie | Jersey: 1
+GP: 24
+Saves: 632
+Shots Against: 699
+Wins: 15
