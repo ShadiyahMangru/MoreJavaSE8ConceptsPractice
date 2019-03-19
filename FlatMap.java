@@ -19,26 +19,29 @@ public class FlatMap{
 			return false;	
 		}
 		else if(input.contains(matchThisArray[0])){
-				return true;	
-				
+			return true;		
 		}
 		return false;
+	};
+	
+	public Function<String, HockeyPlayer> initHP = inputString -> {
+		String[] sepVals = inputString.split(":");
+		String ln = sepVals[1].trim();
+		int pipeIndexLN = ln.indexOf("|");
+		String position = sepVals[2].trim();
+		int pipeIndexP = position.indexOf("|");
+		HockeyPlayer hp = new HockeyPlayer(ln.substring(0, pipeIndexLN), position.substring(0, pipeIndexP), Integer.parseInt(sepVals[3].trim()), "WSH");
+		return hp;
 	};
 	
 	public void getMatchCount(String matchCategory, String... matchThis){
 	try{
 		long matches = 
 		Files.lines(file)
-		.flatMap(line -> Stream.of(line.split("\n"))) //reads in data line-by-line
+		.flatMap(inputData -> Stream.of(inputData.split("\n"))) //reads in data line-by-line
 		.filter(inputString -> keepMatches.test(inputString, matchThis))
-		.peek(match -> {String[] matchArray = match.split(":");
-			String ln = matchArray[1].trim();
-			int pipeIndexLN = ln.indexOf("|");
-			String position = matchArray[2].trim();
-			int pipeIndexP = position.indexOf("|");
-			HockeyPlayer hp = new HockeyPlayer(ln.substring(0, pipeIndexLN), position.substring(0, pipeIndexP), Integer.parseInt(matchArray[3].trim()), "WSH");
-			System.out.println(hp);
-			})
+		.map(match -> initHP.apply(match))
+		.peek(hp -> System.out.println(hp))
 		.count();
 	
 		System.out.println("\n# of " + matchCategory + ": " + matches);
