@@ -19,7 +19,8 @@ public class FlatMap{
 			return false;	
 		}
 		else if(input.contains(matchThisArray[0])){
-			return true;		
+				return true;	
+				
 		}
 		return false;
 	};
@@ -37,8 +38,7 @@ public class FlatMap{
 	public void getMatchCount(String matchCategory, String... matchThis){
 	try{
 		long matches = 
-		Files.lines(file)
-		.flatMap(inputData -> Stream.of(inputData.split("\n"))) //reads in data line-by-line
+		Files.lines(file) //returns the lines from the input file as a Stream (reads in data line-by-line)
 		.filter(inputString -> keepMatches.test(inputString, matchThis))
 		.map(match -> initHP.apply(match))
 		.peek(hp -> System.out.println(hp))
