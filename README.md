@@ -57,6 +57,31 @@ The keepMatches BiPredicate accepts an input String and a String array of desire
 - The **limit()** and **skip()** methods make a Stream smaller. 
 - The **map()** method creates a one-to-one mapping from the elements in the stream to the elements of the next step of the stream.  The map() method returns a Stream transforming each element to another through a Function. 
 
+The stream below utilizes the map() method in the fifth line from the top.
+```
+long matches = 
+Files.lines(file)
+.flatMap(inputData -> Stream.of(inputData.split("\n"))) //reads in data line-by-line
+.filter(inputString -> keepMatches.test(inputString, matchThis))
+.map(match -> initHP.apply(match))
+.peek(hp -> System.out.println(hp))
+.count();
+```
+In this stream, the map() method examines each element of the stream (which in this example is a line in the format Player: xxxxxxxx | Position: xxxxxxxx | Jersey: xx), and, after extracting the information necessary to initialize a new HockeyPlayer object, transforms each stream element into a HockeyPlayer object.  The *initHP* Function accomplishes this stream element transformation.
+```
+public Function<String, HockeyPlayer> initHP = inputString -> {
+	String[] sepVals = inputString.split(":");
+	String ln = sepVals[1].trim();
+	int pipeIndexLN = ln.indexOf("|");
+	String position = sepVals[2].trim();
+	int pipeIndexP = position.indexOf("|");
+	HockeyPlayer hp = new HockeyPlayer(ln.substring(0, pipeIndexLN), position.substring(0, pipeIndexP), Integer.parseInt(sepVals[3].trim()), "WSH");
+	return hp;
+};
+```
+The initHP Function receives a String of hockey player information and methodically extracts a hockey player’s name (as a String), position (as a String), and jersey number (as an Integer) from this String (via split(), trim(), indexOf(), and substring() String API methods, and parseInt() Integer API method).  These values (the latter of which Java automatically unboxes), initializes a new HockeyPlayer object which this Function returns.  When the Stream map() method utilizes the *initHP* Function, each String input transforms into a HockeyPlayer object output, of which the stream is now comprised.
+
+
 ### (iii) Terminal Stream Operations: actually produce a result.  
 Since streams can be used only once, the stream is no longer valid after a terminal operation completes.  TERMINAL OPERATIONS CANNOT EXIST MULTIPLE TIMES IN A PIPELINE.  IF NO TERMINAL OPERATION IS IN THE PIPELINE, A STREAM IS RETURNED BUT NOT EXECUTED.
 
