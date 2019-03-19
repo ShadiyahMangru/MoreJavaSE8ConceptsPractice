@@ -9,16 +9,18 @@ public class FlatMap{
 	Path file = new File("C:\\Users\\593476\\Desktop\\Java Programs\\TabularHockeyData\\2019WSHStatsREV.txt").toPath();
 
 	public BiPredicate<String, String[]> keepMatches = (input, matchThisArray) -> {
-		if(matchThisArray.length==2){
+		if(matchThisArray.length==0){ //handles an ArrayIndexOutOfBoundsException
+			return false;	
+		}
+		else if(matchThisArray.length==2){
 			if(input.contains(matchThisArray[0]) | input.contains(matchThisArray[1])){
 				return true;	
 			}
 			return false;	
 		}
-		else{
-			if(input.contains(matchThisArray[0])){
+		else if(input.contains(matchThisArray[0])){
 				return true;	
-			}
+				
 		}
 		return false;
 	};
