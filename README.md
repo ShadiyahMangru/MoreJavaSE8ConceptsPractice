@@ -3,6 +3,15 @@
 ### JAVA STREAM API SUMMARY
 ### A stream in Java is a sequence of data.  A stream pipeline has three parts: (i) Source, (ii) Intermediate Operations, (iii) Terminal Operations.
 
+In this example, the second line from the top is the **source**, the third, fourth, and fifth lines from the top comprise the **intermediate operations**, and the last line is the **terminal operation**.
+```
+long matches = 
+Files.lines(file) //returns the lines from the input file as a Stream (reads in data line-by-line)
+.filter(inputString -> keepMatches.test(inputString, matchThis))
+.map(match -> initHP.apply(match))
+.peek(hp -> System.out.println(hp))
+.count();
+```
 ### (i) Source: creates the data in the stream (required).
 
 ### (ii) Intermediate Stream Operations: transform the stream into another one.  
