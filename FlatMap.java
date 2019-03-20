@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import java.util.function.*;
 
 public class FlatMap{
-
+	
 	Path file = new File("C:\\Users\\593476\\Desktop\\Java Programs\\TabularHockeyData\\2019WSHStatsREV.txt").toPath();
 
 	public BiPredicate<String, String[]> keepMatches = (input, matchThisArray) -> {
@@ -35,12 +35,37 @@ public class FlatMap{
 		return hp;
 	};
 	
-	public void getMatchCount(String matchCategory, String... matchThis){
+	public Comparator<HockeyPlayer> sortByName = new Comparator<HockeyPlayer>() {
+		@Override
+		public int compare(HockeyPlayer h1, HockeyPlayer h2) {
+			return h1.getLastName().compareTo(h2.getLastName());
+		}
+	};
+	
+	public Comparator<HockeyPlayer> sortByJersey = new Comparator<HockeyPlayer>() {
+		@Override
+		public int compare(HockeyPlayer h1, HockeyPlayer h2) {
+			return h2.getJersey() - h1.getJersey();	
+		}
+	};
+	
+	public Comparator<HockeyPlayer> sortByPThenN = new Comparator<HockeyPlayer>() {
+		@Override
+		public int compare(HockeyPlayer h1, HockeyPlayer h2) {
+			if(h2.getPosition().compareTo(h1.getPosition()) != 0){
+				return h2.getPosition().compareTo(h1.getPosition());	
+			}
+			return h1.getLastName().compareTo(h2.getLastName());		
+		}
+	};
+	
+	public void getMatchCount(Comparator<HockeyPlayer> sortBy, String matchCategory, String... matchThis){
 	try{
 		long matches = 
 		Files.lines(file) //returns the lines from the input file as a Stream (reads in data line-by-line)
 		.filter(inputString -> keepMatches.test(inputString, matchThis))
 		.map(match -> initHP.apply(match))
+		.sorted(sortBy)
 		.peek(hp -> System.out.println(hp))
 		.count();
 	
@@ -80,39 +105,46 @@ public class FlatMap{
 			System.exit(0);
 		}
 		else if(userInput.equals("7")){
-			System.out.println("*** Filter Selection: Goalies ***\n");
+			System.out.println("*** Filter Selection: Goalies ***");
+			System.out.println("*** Results Sorted By: Last Name ***\n");
 			System.out.println(dataTableHeader.get());
-			getMatchCount("Goalies", "Goalie");
+			getMatchCount(sortByName, "Goalies", "Goalie");
 		}
 		else if(userInput.equals("6")){
-			System.out.println("*** Filter Selection: Defensemen ***\n");
+			System.out.println("*** Filter Selection: Defensemen ***");
+			System.out.println("*** Results Sorted By: Jersey Number ***\n");
 			System.out.println(dataTableHeader.get());
-			getMatchCount("Defensemen", "Defense");
+			getMatchCount(sortByJersey, "Defensemen", "Defense");
 		}
 		else if(userInput.equals("5")){
-			System.out.println("*** Filter Selection: Forwards ***\n");
+			System.out.println("*** Filter Selection: Forwards ***");
+			System.out.println("*** Results Sorted By: Position Then Last Name ***\n");
 			System.out.println(dataTableHeader.get());
-			getMatchCount("Forwards", "Wing", "Center");
+			getMatchCount(sortByPThenN, "Forwards", "Wing", "Center");
 		}
 		else if(userInput.equals("4")){
-			System.out.println("*** Filter Selection: Wingers ***\n");
+			System.out.println("*** Filter Selection: Wingers ***");
+			System.out.println("*** Results Sorted By: Last Name ***\n");
 			System.out.println(dataTableHeader.get());
-			getMatchCount("Wingers", "Wing");
+			getMatchCount(sortByName, "Wingers", "Wing");
 		}
 		else if(userInput.equals("3")){
-			System.out.println("*** Filter Selection: Right-Wingers ***\n");
+			System.out.println("*** Filter Selection: Right-Wingers ***");
+			System.out.println("*** Results Sorted By: Last Name ***\n");
 			System.out.println(dataTableHeader.get());
-			getMatchCount("Right-Wingers", "Right");
+			getMatchCount(sortByName, "Right-Wingers", "Right");
 		}
 		else if(userInput.equals("2")){
-			System.out.println("*** Filter Selection: Left-Wingers ***\n");
+			System.out.println("*** Filter Selection: Left-Wingers ***");
+			System.out.println("*** Results Sorted By: Last Name ***\n");
 			System.out.println(dataTableHeader.get());
-			getMatchCount("Left-Wingers", "Left");
+			getMatchCount(sortByName, "Left-Wingers", "Left");
 		}
 		else{
-			System.out.println("*** Filter Selection: Centers ***\n");
+			System.out.println("*** Filter Selection: Centers ***");
+			System.out.println("*** Results Sorted By: Last Name ***\n");
 			System.out.println(dataTableHeader.get());
-			getMatchCount("Centers", "Center");
+			getMatchCount(sortByName, "Centers", "Center");
 		}
 		mainMenu();
 	}
