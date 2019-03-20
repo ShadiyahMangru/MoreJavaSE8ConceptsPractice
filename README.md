@@ -61,6 +61,51 @@ The keepMatches BiPredicate accepts an input String and a String array of desire
 
 - The **flatMap()** method takes each element in a stream and makes any elements it contains top-level elements in a single stream.  The flatMap() method flattens nested lists into a single level and removes empty lists.
 - The **sorted()** method returns a stream with the elements sorted.  Just like sorting arrays, Java uses natural ordering unless one specifies a comparator.  
+
+The stream below utilizes the sorted() method in the fifth line from the top.
+```
+long matches = 
+Files.lines(file) //returns the lines from the input file as a Stream (reads in data line-by-line)
+.filter(inputString -> keepMatches.test(inputString, matchThis))
+.map(match -> initHP.apply(match))
+.sorted(sortBy)
+.peek(hp -> System.out.println(hp))
+.count();
+```
+In this stream, the sorted() method (re)orders the current elements in the stream according to the definition of *sortBy* (a parameter, of type Comparator<HockeyPlayer>, of the larger method that contains this stream).  In this application, *sortBy* currently assumes one of three forms: *sortByName*, *sortByJersey*, *sortByPThenN*.
+
+Each of these Comparators uses the @Override annotation to signal to the compiler that the ensuing method is an intended override of the Comparator Interface.  In *sortByName*, the compareTo() method compares the String that is each HockeyPlayer object parameter’s lastName, and returns a positive, negative or zero number to determine alphabetic ordering.
+```
+public Comparator<HockeyPlayer> sortByName = new Comparator<HockeyPlayer>() {
+	@Override
+	public int compare(HockeyPlayer h1, HockeyPlayer h2) {
+		return h1.getLastName().compareTo(h2.getLastName());
+	}
+};
+```
+In *sortByJersey*, subtraction compares the int that is each HockeyPlayer object parameter’s jersey number, and returns a positive, negative or zero number to determine numeric ordering.
+```
+public Comparator<HockeyPlayer> sortByJersey = new Comparator<HockeyPlayer>() {
+	@Override
+	public int compare(HockeyPlayer h1, HockeyPlayer h2) {
+		return h2.getJersey() - h1.getJersey();	
+	}
+};
+```
+In *sortByPThenN*, if the first compareTo() method returns a zero to signify that both HockeyPlayer object parameters have the same position, another compareTo() method is called to compare each HockeyPlayer object parameter's last name.  This Comparator sorts the current stream elements first by position, and then subsorts players with the same position from A-Z by last name.  
+```
+public Comparator<HockeyPlayer> sortByPThenN = new Comparator<HockeyPlayer>() {
+	@Override
+	public int compare(HockeyPlayer h1, HockeyPlayer h2) {
+		if(h2.getPosition().compareTo(h1.getPosition()) != 0){
+			return h2.getPosition().compareTo(h1.getPosition());	
+		}
+		return h1.getLastName().compareTo(h2.getLastName());		
+	}
+};
+```
+The current elements in the stream are reordered depending on which Comparator<HockeyPlayer> the Stream sorted() method relies on (*sortByName*, *sortByJersey*, or *sortByPThenN* in this example).
+
 - The **peek()** method is useful for debugging because it allows one to perform a stream operation without actually changing the stream.  The most common use for peek() is to output the contents of the stream as it goes by.  
 - The **distinct()** method returns a stream with duplicate values removed. 
 - The **limit()** and **skip()** methods make a Stream smaller. 
